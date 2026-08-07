@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>АПД — магазин защиты</title>
+    <title>АПД — Анти-Пендосовское Движение</title>
     <style>
-        /* ----- базовые сбросы и переменные ----- */
         * {
             margin: 0;
             padding: 0;
@@ -39,18 +38,16 @@
             flex-direction: column;
             align-items: center;
             padding: 0 1.5rem 2rem;
-            position: relative;
             background-image: radial-gradient(circle at 10% 20%, rgba(200, 200, 210, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 90% 80%, rgba(180, 180, 190, 0.10) 0%, transparent 50%);
         }
 
-        /* ----- контейнер ----- */
         .container {
             max-width: 1360px;
             width: 100%;
         }
 
-        /* ----- ШАПКА (лого, поиск, навигация, корзина/профиль) ----- */
+        /* ----- ШАПКА (как в магазине) ----- */
         .header {
             display: flex;
             align-items: center;
@@ -82,7 +79,6 @@
             align-items: center;
             gap: 4px;
         }
-
         .logo small {
             font-size: 0.8rem;
             font-weight: 400;
@@ -92,63 +88,12 @@
             letter-spacing: 0.2px;
         }
 
-        .search-wrap {
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(8px);
-            border-radius: 60px;
-            padding: 0.1rem 0.1rem 0.1rem 1.2rem;
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-            transition: box-shadow 0.2s;
-            min-width: 200px;
-        }
-
-        .search-wrap:focus-within {
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-            border-color: rgba(0, 0, 0, 0.1);
-        }
-
-        .search-wrap input {
-            border: none;
-            background: transparent;
-            padding: 0.6rem 0.2rem;
-            font-size: 0.9rem;
-            width: 100%;
-            outline: none;
-            color: var(--text-main);
-            font-weight: 400;
-        }
-
-        .search-wrap input::placeholder {
-            color: var(--text-muted);
-            font-weight: 300;
-        }
-
-        .search-wrap button {
-            background: var(--primary);
-            border: none;
-            border-radius: 60px;
-            padding: 0.5rem 1.4rem;
-            color: white;
-            font-weight: 500;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .search-wrap button:hover {
-            background: #2c2c32;
-        }
-
         .nav-links {
             display: flex;
             gap: 1.2rem;
             align-items: center;
             flex-wrap: wrap;
         }
-
         .nav-links a {
             text-decoration: none;
             color: var(--text-secondary);
@@ -158,8 +103,11 @@
             padding: 0.3rem 0.2rem;
             border-bottom: 2px solid transparent;
         }
-
         .nav-links a:hover {
+            color: var(--text-main);
+            border-bottom-color: var(--primary);
+        }
+        .nav-links a.active {
             color: var(--text-main);
             border-bottom-color: var(--primary);
         }
@@ -169,33 +117,30 @@
             align-items: center;
             gap: 1.2rem;
         }
-
-        .header-icon {
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.15s;
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(4px);
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid rgba(0,0,0,0.08);
+            padding: 0.4rem 1.2rem;
             border-radius: 60px;
-            padding: 0.3rem 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .header-icon:hover {
-            transform: scale(1.02);
-        }
-
-        .cart-icon-wrap {
-            position: relative;
+            font-weight: 500;
             cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-ghost:hover {
+            background: rgba(0,0,0,0.03);
+        }
+        .cart-icon-wrap {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.3rem;
+            cursor: pointer;
+            font-size: 1.3rem;
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(4px);
+            padding: 0.2rem 0.9rem;
+            border-radius: 60px;
+            border: 1px solid rgba(255,255,255,0.3);
         }
-
         .cart-count {
             background: #1a1a1e;
             color: white;
@@ -210,7 +155,7 @@
             padding: 0 5px;
         }
 
-        /* ----- HERO-БАННЕР ----- */
+        /* ----- ГЕРОЙ (главный баннер) ----- */
         .hero {
             background: linear-gradient(145deg, #1c1c20, #2e2e36);
             border-radius: var(--radius-lg);
@@ -226,7 +171,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .hero::after {
             content: '';
             position: absolute;
@@ -237,20 +181,18 @@
             background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, transparent 70%);
             border-radius: 50%;
         }
-
         .hero-left h2 {
             font-size: 2.4rem;
             font-weight: 700;
             letter-spacing: -0.5px;
             margin-bottom: 0.3rem;
         }
-
         .hero-left p {
             font-size: 1.1rem;
             opacity: 0.7;
             font-weight: 300;
+            max-width: 600px;
         }
-
         .hero-tag {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(4px);
@@ -260,7 +202,7 @@
             font-weight: 500;
         }
 
-        /* ----- БЛОК ПРЕИМУЩЕСТВ ----- */
+        /* ----- БЛОК ПРЕИМУЩЕСТВ (стиль как в магазине) ----- */
         .benefits {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -272,7 +214,6 @@
             padding: 1.5rem 2rem;
             border: 1px solid var(--glass-border);
         }
-
         .benefit-item {
             display: flex;
             align-items: center;
@@ -281,678 +222,108 @@
             font-weight: 500;
             color: var(--text-secondary);
         }
-
         .benefit-item span:first-child {
             font-size: 1.5rem;
         }
 
-        /* ----- СЕТКА ТОВАРОВ (как Ozon/WB) ----- */
-        .catalog {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.8rem;
-            margin-bottom: 2.5rem;
+        /* ----- СЕКЦИЯ "О НАС" (карточки-миссии) ----- */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1.5rem;
+            letter-spacing: -0.3px;
+            border-left: 6px solid var(--primary);
+            padding-left: 1rem;
         }
-
-        .product-card {
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 2rem;
+        }
+        .mission-card {
             background: var(--card-bg);
             backdrop-filter: blur(8px);
             border-radius: var(--radius-lg);
-            overflow: hidden;
+            padding: 1.8rem 1.5rem;
             border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: var(--shadow-soft);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-
-        .product-card:hover {
-            transform: translateY(-6px);
+        .mission-card:hover {
+            transform: translateY(-4px);
             box-shadow: var(--shadow-hover);
-            border-color: rgba(255, 255, 255, 0.7);
         }
-
-        .product-image {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            background: #eef0f4;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.3rem;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
+        .mission-card .icon {
+            font-size: 2.4rem;
+            margin-bottom: 0.5rem;
         }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.4s ease;
-            border-radius: var(--radius-sm);
-        }
-
-        .product-card:hover .product-image img {
-            transform: scale(1.02);
-        }
-
-        /* бейджи */
-        .badges {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .badge {
-            background: rgba(26, 26, 30, 0.85);
-            backdrop-filter: blur(4px);
-            color: white;
-            font-size: 0.65rem;
+        .mission-card h3 {
+            font-size: 1.2rem;
             font-weight: 600;
-            padding: 0.2rem 0.7rem;
-            border-radius: 40px;
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-        }
-
-        .badge.hit {
-            background: rgba(200, 50, 50, 0.85);
-        }
-
-        .badge.new {
-            background: rgba(30, 120, 80, 0.85);
-        }
-
-        .badge.popular {
-            background: rgba(200, 160, 40, 0.85);
-        }
-
-        .product-info {
-            padding: 1rem 1rem 1.2rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-name {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-main);
-            margin-bottom: 0.25rem;
-            line-height: 1.3;
-        }
-
-        .product-rating {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.3rem;
-        }
-
-        .product-rating .stars {
-            color: #f5b342;
-            letter-spacing: 1px;
-        }
-
-        .product-availability {
-            font-size: 0.75rem;
-            color: #2a7a4a;
-            font-weight: 500;
             margin-bottom: 0.4rem;
         }
-
-        .product-availability.out {
-            color: #b03a3a;
+        .mission-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
-        .product-prices {
-            display: flex;
-            align-items: baseline;
-            gap: 0.7rem;
-            flex-wrap: wrap;
-            margin-top: 0.2rem;
-        }
-
-        .price-old {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            text-decoration: line-through;
-        }
-
-        .price-current {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--text-main);
-            letter-spacing: -0.3px;
-        }
-
-        .price-current::after {
-            content: ' ₽';
-            font-weight: 400;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-left: 2px;
-        }
-
-        .product-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 0.8rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.03);
-            padding-top: 0.8rem;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .add-controls {
-            display: flex;
-            align-items: center;
-            gap: 0.2rem;
-        }
-
-        .add-controls button {
-            background: rgba(0, 0, 0, 0.03);
-            border: none;
-            width: 26px;
-            height: 26px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: background 0.15s;
-            color: var(--text-main);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .add-controls button:hover {
-            background: rgba(0, 0, 0, 0.08);
-        }
-
-        .add-controls .qty-display {
-            min-width: 24px;
+        /* ----- ЦИТАТА / БЛОК С ДЕВИЗОМ ----- */
+        .quote-block {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius-lg);
+            padding: 2rem 2.5rem;
+            margin: 2rem 0 2.5rem;
+            border-left: 6px solid var(--primary);
+            border: 1px solid var(--glass-border);
+            font-style: italic;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
             text-align: center;
-            font-weight: 600;
-            font-size: 0.9rem;
+        }
+        .quote-block strong {
+            color: var(--text-main);
+            font-weight: 700;
         }
 
-        .product-btn {
-            background: var(--gradient-btn);
-            border: none;
-            color: white;
-            padding: 0.4rem 1.2rem;
-            border-radius: 60px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            letter-spacing: 0.2px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-            position: relative;
-            overflow: hidden;
+        /* ----- КАРТОЧКИ "НАПРАВЛЕНИЯ" (услуги / курсы) ----- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.8rem;
+            margin: 1.5rem 0 2.5rem;
         }
-
-        .product-btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
-            opacity: 0;
-            transition: opacity 0.3s;
+        .service-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius-lg);
+            padding: 1.8rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            transition: 0.2s;
         }
-
-        .product-btn:hover::after {
-            opacity: 1;
-        }
-
-        .product-btn:hover {
+        .service-card:hover {
             transform: scale(1.02);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+            box-shadow: var(--shadow-hover);
         }
-
-        .product-btn:active {
-            transform: scale(0.95);
-        }
-
-        .product-btn.in-cart {
-            background: #2a7a4a;
-        }
-
-        /* ----- модалка (детальный просмотр) ----- */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(6px);
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 1.5rem;
-        }
-
-        .modal-overlay.open {
-            display: flex;
-        }
-
-        .modal-card {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(16px);
-            max-width: 780px;
-            width: 100%;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
-            animation: modalFade 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        @keyframes modalFade {
-            from {
-                opacity: 0;
-                transform: scale(0.94) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .modal-image {
-            width: 100%;
-            aspect-ratio: 16 / 10;
-            background: #e8eaf0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .modal-body {
-            padding: 2rem 2rem 1.8rem;
-        }
-
-        .modal-body h2 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 0.3rem;
-        }
-
-        .modal-body .modal-price {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin: 0.3rem 0 0.5rem;
-        }
-
-        .modal-body .modal-price::after {
-            content: ' ₽';
-            font-weight: 400;
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-left: 4px;
-        }
-
-        .modal-body .modal-desc {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            border-top: 1px solid rgba(0, 0, 0, 0.04);
-            padding-top: 1.5rem;
-        }
-
-        .modal-close {
-            background: rgba(0, 0, 0, 0.04);
-            border: none;
-            padding: 0.6rem 1.8rem;
-            border-radius: 60px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .modal-close:hover {
-            background: rgba(0, 0, 0, 0.08);
-        }
-
-        /* ----- КОРЗИНА (сайдбар) улучшенная ----- */
-        .cart-sidebar {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 420px;
-            max-width: 92vw;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(20px);
-            box-shadow: -12px 0 40px rgba(0, 0, 0, 0.04);
-            z-index: 2000;
-            padding: 1.8rem 1.5rem;
-            overflow-y: auto;
-            flex-direction: column;
-            border-left: 1px solid rgba(255, 255, 255, 0.3);
-            animation: slideIn 0.35s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(60px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .cart-sidebar.open {
-            display: flex;
-        }
-
-        .cart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-            padding-bottom: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .cart-header h2 {
-            font-size: 1.4rem;
-            font-weight: 600;
-        }
-
-        .cart-close {
-            background: none;
-            border: none;
-            font-size: 1.6rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-            padding: 0 0.3rem;
-        }
-
-        .cart-items {
-            flex: 1;
-            margin-bottom: 1rem;
-        }
-
-        .cart-item {
-            display: flex;
-            gap: 0.8rem;
-            padding: 0.8rem 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
-            align-items: center;
-        }
-
-        .cart-item-img {
-            width: 56px;
-            height: 56px;
-            border-radius: var(--radius-sm);
-            background: #eef0f4;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .cart-item-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .cart-item-info {
-            flex: 1;
-        }
-
-        .cart-item-name {
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .cart-item-price {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .cart-item-controls {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .cart-item-controls button {
-            background: rgba(0, 0, 0, 0.03);
-            border: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: background 0.15s;
-        }
-
-        .cart-item-controls button:hover {
-            background: rgba(0, 0, 0, 0.08);
-        }
-
-        .cart-item-controls .qty {
-            min-width: 20px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .cart-item-remove {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            cursor: pointer;
-            padding: 0 0.2rem;
-            transition: color 0.15s;
-        }
-
-        .cart-item-remove:hover {
-            color: #b0343a;
-        }
-
-        .cart-summary {
-            border-top: 1px solid rgba(0, 0, 0, 0.06);
-            padding-top: 1rem;
-        }
-
-        .cart-summary .row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            padding: 0.2rem 0;
-        }
-
-        .cart-summary .row.total {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--text-main);
-            border-top: 1px solid rgba(0, 0, 0, 0.06);
-            padding-top: 0.8rem;
-            margin-top: 0.3rem;
-        }
-
-        .cart-pay-btn {
-            background: var(--gradient-btn);
-            border: none;
-            color: white;
-            padding: 0.9rem;
-            border-radius: 60px;
-            font-size: 1rem;
-            font-weight: 600;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 0.8rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-        }
-
-        .cart-pay-btn:hover {
-            transform: scale(1.01);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
-        }
-
-        .cart-empty {
-            text-align: center;
-            color: var(--text-muted);
-            padding: 2rem 0;
-            font-size: 1rem;
-        }
-
-        /* ----- БАНКОВСКОЕ ОКНО ОПЛАТЫ ----- */
-        .pay-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            z-index: 3000;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-        }
-
-        .pay-overlay.open {
-            display: flex;
-        }
-
-        .pay-modal {
-            background: white;
-            max-width: 440px;
-            width: 100%;
-            border-radius: var(--radius-lg);
-            padding: 2.5rem 2rem 2rem;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
-            animation: modalFade 0.35s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .pay-modal .bank-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-            padding-bottom: 0.8rem;
-        }
-
-        .pay-modal .bank-header .bank-name {
-            font-weight: 700;
-            color: var(--text-main);
-            font-size: 0.95rem;
-        }
-
-        .pay-modal .pay-icon {
+        .service-card .emoji-big {
             font-size: 2.8rem;
-            text-align: center;
+            margin-bottom: 0.4rem;
+        }
+        .service-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
             margin-bottom: 0.3rem;
         }
-
-        .pay-modal h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 0.2rem;
-        }
-
-        .pay-modal .pay-amount {
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 1.5rem;
-        }
-
-        .pay-modal .pay-amount small {
-            font-weight: 400;
+        .service-card p {
             font-size: 0.9rem;
             color: var(--text-secondary);
         }
 
-        .pay-progress {
-            width: 100%;
-            height: 4px;
-            background: #e8eaf0;
-            border-radius: 20px;
-            margin: 1rem 0 0.8rem;
-            overflow: hidden;
-        }
-
-        .pay-progress .bar {
-            height: 100%;
-            width: 0%;
-            background: #1a1a1e;
-            border-radius: 20px;
-            transition: width 0.15s linear;
-        }
-
-        .pay-status {
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        .pay-btn-close {
-            background: rgba(0, 0, 0, 0.04);
-            border: none;
-            padding: 0.6rem 2rem;
-            border-radius: 60px;
-            font-weight: 500;
-            cursor: pointer;
-            display: block;
-            margin: 0 auto;
-            transition: background 0.2s;
-        }
-
-        .pay-btn-close:hover {
-            background: rgba(0, 0, 0, 0.08);
-        }
-
-        /* ----- ФУТЕР ----- */
+        /* ----- ФУТЕР (как в магазине) ----- */
         .footer {
             margin-top: 2.5rem;
             padding: 2rem 0 1.5rem;
@@ -962,7 +333,6 @@
             gap: 2rem;
             width: 100%;
         }
-
         .footer-col h4 {
             font-size: 0.8rem;
             text-transform: uppercase;
@@ -970,9 +340,7 @@
             color: var(--text-secondary);
             margin-bottom: 0.8rem;
         }
-
-        .footer-col a,
-        .footer-col p {
+        .footer-col a, .footer-col p {
             display: block;
             font-size: 0.85rem;
             color: var(--text-muted);
@@ -980,668 +348,203 @@
             padding: 0.2rem 0;
             transition: color 0.15s;
         }
-
         .footer-col a:hover {
             color: var(--text-main);
         }
-
         .footer-col .social {
             display: flex;
             gap: 1rem;
             font-size: 1.3rem;
         }
 
-        /* ----- ТОСТ ----- */
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(26, 26, 30, 0.92);
-            backdrop-filter: blur(8px);
-            color: white;
-            padding: 0.7rem 2rem;
-            border-radius: 60px;
-            font-weight: 500;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-            z-index: 9999;
-            opacity: 0;
-            transition: opacity 0.35s ease;
-            pointer-events: none;
-            font-size: 0.9rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .toast.show {
-            opacity: 1;
-        }
-
-        /* ----- адаптив ----- */
+        /* ----- АДАПТИВ ----- */
         @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .header-left {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .search-wrap {
-                width: 100%;
-            }
-            .nav-links {
-                justify-content: center;
-            }
-            .header-right {
-                justify-content: center;
-            }
-            .hero {
-                padding: 2rem 1.5rem;
-            }
-            .hero-left h2 {
-                font-size: 1.8rem;
-            }
-            .catalog {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-                gap: 1rem;
-            }
-            .cart-sidebar {
-                width: 100%;
-                max-width: 100%;
-                border-left: none;
-            }
-            .benefits {
-                grid-template-columns: 1fr 1fr;
-                padding: 1rem;
-            }
+            .header { flex-direction: column; align-items: stretch; }
+            .header-left { flex-direction: column; align-items: stretch; }
+            .nav-links { justify-content: center; }
+            .header-right { justify-content: center; }
+            .hero { padding: 2rem 1.5rem; }
+            .hero-left h2 { font-size: 1.8rem; }
+            .benefits { grid-template-columns: 1fr 1fr; padding: 1rem; }
+            .section-title { font-size: 1.6rem; }
         }
-
         @media (max-width: 480px) {
-            .catalog {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.8rem;
-            }
-            .product-info {
-                padding: 0.6rem 0.6rem 0.9rem;
-            }
-            .product-name {
-                font-size: 0.8rem;
-            }
-            .price-current {
-                font-size: 1.1rem;
-            }
-            .product-btn {
-                font-size: 0.65rem;
-                padding: 0.2rem 0.8rem;
-            }
-            .add-controls button {
-                width: 22px;
-                height: 22px;
-                font-size: 0.7rem;
-            }
-            .hero-left h2 {
-                font-size: 1.4rem;
-            }
+            .hero-left h2 { font-size: 1.4rem; }
+            .mission-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
+            .benefits { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+<div class="container">
 
-        <!-- ШАПКА -->
-        <header class="header">
-            <div class="header-left">
-                <a href="#" class="logo">АПД <small>Анти-Пендосовское Движение</small></a>
-                <div class="search-wrap">
-                    <input type="text" placeholder="Найти защиту..." />
-                    <button>🔍</button>
-                </div>
-                <nav class="nav-links">
-                    <a href="#">Каталог</a>
-                    <a href="#">Доставка</a>
-                    <a href="#">Контакты</a>
-                </nav>
-            </div>
-            <div class="header-right">
-                <div class="header-icon">👤</div>
-                <div class="cart-icon-wrap" id="cartIcon">
-                    <span style="font-size:1.3rem;">🛒</span>
-                    <span class="cart-count" id="cartCount">0</span>
-                </div>
-            </div>
-        </header>
-
-        <!-- HERO-БАННЕР -->
-        <div class="hero">
-            <div class="hero-left">
-                <h2>🛡️ Защита нового поколения</h2>
-                <p>Бесплатная доставка от 3000 ₽</p>
-            </div>
-            <div class="hero-tag">🔥 Акция до конца месяца</div>
+    <!-- ШАПКА (скопирована из магазина для единообразия) -->
+    <header class="header">
+        <div class="header-left">
+            <a href="#" class="logo">
+                <span class="logo-icon">🛡️</span> АПД
+                <small>движение</small>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html" class="active">О движении</a>
+                <a href="shop.html">Магазин</a>
+                <a href="merch.html">Мерч</a>
+                <a href="service.html">Услуги</a>
+                <a href="course.html">Курсы</a>
+            </nav>
         </div>
-
-        <!-- ПРЕИМУЩЕСТВА -->
-        <div class="benefits">
-            <div class="benefit-item"><span>🚚</span> Быстрая доставка</div>
-            <div class="benefit-item"><span>🔒</span> Безопасная оплата</div>
-            <div class="benefit-item"><span>⭐</span> Гарантия качества</div>
-            <div class="benefit-item"><span>📦</span> Возврат 14 дней</div>
+        <div class="header-right">
+            <button class="btn-ghost">Войти</button>
+            <div class="cart-icon-wrap">
+                🛒
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
         </div>
+    </header>
 
-        <!-- КАТАЛОГ -->
-        <section class="catalog" id="catalog"></section>
-
-        <!-- ФУТЕР -->
-        <footer class="footer">
-            <div class="footer-col">
-                <h4>Контакты</h4>
-                <p>📞 +7 (988) 405-91-11</p>
-                <p>📧 griskyy@yandex.ru</p>
-            </div>
-            <div class="footer-col">
-                <h4>Информация</h4>
-                <a href="#">Политика конфиденциальности</a>
-                <a href="#">Оферта</a>
-                <a href="#">Возврат</a>
-            </div>
-            <div class="footer-col">
-                <h4>Способы оплаты</h4>
-                <p>💳 МИР</p>
-                <p>📱 СБП</p>
-            </div>
-            <div class="footer-col">
-                <h4>Мы в соцсетях</h4>
-                <div class="social">
-                    <span><a href="https://web.max.ru/-77594313556719">Макс</a></span>
-                </div>
-            </div>
-        </footer>
+    <!-- ГЕРОЙ -->
+    <div class="hero">
+        <div class="hero-left">
+            <h2>🛡️ Анти-Пендосовское Движение</h2>
+            <p>Подавление и пресечение любых попыток американцев покуситься на жизнь и здоровье граждан РФ.</p>
+        </div>
+        <div class="hero-tag">🇷🇺 Мы — щит, который всегда с вами</div>
     </div>
 
-    <!-- МОДАЛКА (детальный просмотр) -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-card">
-            <div class="modal-image"><img src="" alt="детально" id="modalImg" /></div>
-            <div class="modal-body">
-                <h2 id="modalName">Название</h2>
-                <div class="modal-price" id="modalPrice">0</div>
-                <p class="modal-desc" id="modalDesc">Описание</p>
-                <div class="modal-actions">
-                    <button class="product-btn" id="modalAddBtn">➕ Добавить</button>
-                    <button class="modal-close" id="modalCloseBtn">Закрыть</button>
-                </div>
-            </div>
+    <!-- ПРЕИМУЩЕСТВА (короткие фишки) -->
+    <div class="benefits">
+        <div class="benefit-item"><span>🧠</span> Ментальная гигиена</div>
+        <div class="benefit-item"><span>🔒</span> Защита от УМПИ*</div>
+        <div class="benefit-item"><span>📡</span> Глушилки мыслей</div>
+        <div class="benefit-item"><span>⚡</span> Фольга 24/7</div>
+    </div>
+
+    <!-- ЦИТАТА-ДЕВИЗ -->
+    <div class="quote-block">
+        «<strong>Американец может украсть ваши мысли, но он не украдёт вашу волю.</strong> АПД — это щит, который всегда с вами».
+    </div>
+
+    <!-- СЕКЦИЯ "О ДВИЖЕНИИ" -->
+    <h2 class="section-title">⚔️ Наша миссия</h2>
+    <div class="mission-grid">
+        <div class="mission-card">
+            <div class="icon">🛡️</div>
+            <h3>Защита сознания</h3>
+            <p>Подавление любых попыток американского влияния на ментальное поле граждан РФ. Мы блокируем УМПИ* на всех частотах.</p>
+        </div>
+        <div class="mission-card">
+            <div class="icon">🧠</div>
+            <h3>Ментальная гигиена</h3>
+            <p>Регулярные чистки сознания от чуждых информационных шумов. Фольгированные процедуры — основа нашей методики.</p>
+        </div>
+        <div class="mission-card">
+            <div class="icon">📡</div>
+            <h3>Технологический суверенитет</h3>
+            <p>Разработка и внедрение средств защиты: от шапочек из фольги до полотенец-блокираторов. Всё — в правовом поле.</p>
+        </div>
+        <div class="mission-card">
+            <div class="icon">🎓</div>
+            <h3>Обучение и курсы</h3>
+            <p>Сертифицированные специалисты АПД проводят курсы по противодействию УМПИ. Дипломы государственного образца (шутка).</p>
         </div>
     </div>
 
-    <!-- КОРЗИНА (сайдбар) -->
-    <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
-            <h2>🛒 Корзина</h2>
-            <button class="cart-close" id="cartCloseBtn">✕</button>
+    <!-- НАПРАВЛЕНИЯ / УСЛУГИ -->
+    <h2 class="section-title">📦 Что мы предлагаем</h2>
+    <div class="services-grid">
+        <div class="service-card">
+            <div class="emoji-big">🧢</div>
+            <h4>Фольго-шапочки</h4>
+            <p>Классическая защита от УМПИ*. Любые размеры, цвета — от чёрного до серебряного.</p>
         </div>
-        <div class="cart-items" id="cartItems"><div class="cart-empty">Корзина пуста</div></div>
-        <div class="cart-summary" id="cartSummary">
-            <div class="row"><span>Товары</span><span id="subtotalAmount">0 ₽</span></div>
-            <div class="row"><span>Доставка</span><span id="deliveryCost">0 ₽</span></div>
-            <div class="row total"><span>Итого</span><span id="totalAmount">0 ₽</span></div>
-            <button class="cart-pay-btn" id="payBtn">💳 Оплатить</button>
+        <div class="service-card">
+            <div class="emoji-big">🥄</div>
+            <h4>Ложки для ТСЛ</h4>
+            <p>Специальный инвентарь для проведения Трюка с ложкой».</p>
+        </div>
+        <div class="service-card">
+            <div class="emoji-big">📱</div>
+            <h4>Чехлы-блокираторы</h4>
+            <p>Не дайте смартфону украсть ваши сны. Чехол с фольгированной прослойкой — защита от Скайнет.</p>
+        </div>
+        <div class="service-card">
+            <div class="emoji-big">🧥</div>
+            <h4>Плащи «Рейн»</h4>
+            <p>Водонепроницаемые и мыслезащитные. Идеальны для прогулок в дождливую погоду.</p>
+        </div>
+        <div class="service-card">
+            <div class="emoji-big">📚</div>
+            <h4>Курсы АПД</h4>
+            <p>Обучаем основам ментальной самозащиты, распознаванию УМПИ* и техникам фольгирования.</p>
+        </div>
+        <div class="service-card">
+            <div class="emoji-big">🛡️</div>
+            <h4>Консультации</h4>
+            <p>Сертифицированные специалисты помогут подобрать индивидуальную защиту от американского влияния.</p>
         </div>
     </div>
 
-    <!-- БАНКОВСКОЕ ОКНО ОПЛАТЫ -->
-    <div class="pay-overlay" id="payOverlay">
-        <div class="pay-modal">
-            <div class="bank-header">
-                <span class="bank-name">🏦 АПД-Банк</span>
-                <span>🔒 защищено</span>
+    <!-- ДОПОЛНИТЕЛЬНЫЙ БЛОК: ПРИНЦИПЫ -->
+    <div style="background: var(--card-bg); border-radius: var(--radius-lg); padding: 1.8rem 2rem; border: 1px solid var(--glass-border); margin: 1.5rem 0 2rem;">
+        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.8rem;">🔰 Наши принципы</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1rem;">
+            <div><span style="font-weight: 600;">🇷🇺 Патриотизм</span> — защита Родины от информационных угроз.</div>
+            <div><span style="font-weight: 600;">🧠 Наука</span> — все разработки основаны на фольгированных исследованиях.</div>
+            <div><span style="font-weight: 600;">🤝 Добровольность</span> — движение открыто для всех неравнодушных.</div>
+            <div><span style="font-weight: 600;">⚖️ Законность</span> — действуем строго в правовом поле РФ.</div>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">* УМПИ — Ультра-Ментальное Пендосовское Излучение (термин АПД).</p>
+    </div>
+
+    <!-- ФУТЕР (как в магазине) -->
+    <footer class="footer">
+        <div class="footer-col">
+            <h4>Контакты</h4>
+            <p>📞 +7 (988) 405-91-11</p>
+            <p>📧 griskyy@yandex.ru</p>
+        </div>
+        <div class="footer-col">
+            <h4>Информация</h4>
+            <a href="#">Политика конфиденциальности</a>
+            <a href="#">Оферта</a>
+            <a href="#">Вакансии</a>
+        </div>
+        <div class="footer-col">
+            <h4>Способы оплаты</h4>
+            <p>💳 МИР</p>
+            <p>📱 СБП</p>
+        </div>
+        <div class="footer-col">
+            <h4>Мы в соцсетях</h4>
+            <div class="social">
+                <span><a href="https://web.max.ru/-77594313556719">Макс</a></span>
             </div>
-            <div class="pay-icon">💳</div>
-            <h3>Оплата заказа</h3>
-            <div class="pay-amount"><small>Сумма</small><br /><span id="payTotal">0</span> ₽</div>
-            <div class="pay-progress"><div class="bar" id="payProgressBar"></div></div>
-            <div class="pay-status" id="payStatus">Введите данные карты...</div>
-            <button class="pay-btn-close" id="payCloseBtn" style="display:none;">✅ Готово</button>
         </div>
-    </div>
+    </footer>
+</div>
 
-    <!-- ТОСТ -->
-    <div class="toast" id="toast"></div>
+<!-- лёгкий тост (для имитации интеграции с корзиной, но на главной не используется) -->
+<div class="toast" id="toast" style="position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); background:rgba(26,26,30,0.92); backdrop-filter:blur(8px); color:white; padding:0.7rem 2rem; border-radius:60px; font-weight:500; box-shadow:0 8px 30px rgba(0,0,0,0.1); z-index:9999; opacity:0; transition:opacity 0.35s ease; pointer-events:none; font-size:0.9rem; border:1px solid rgba(255,255,255,0.05);">✅</div>
 
-    <script>
-        (function() {
-            // ----- ТОВАРЫ (содержание сохранено) -----
-            const products = [{
-                id: 1,
-                name: 'Фольгированные беруши АПД-2',
-                price: 990,
-                oldPrice: 1290,
-                desc: 'Фольгированные беруши сберегут ваш мозг от ультразвуковых волн. Надёжная защита в любых условиях.',
-                img: './images/Folg.jpg',
-                badge: 'Выбор покупателей',
-                rating: 4.8,
-                reviews: 124,
-                inStock: true
-            }, {
-                id: 2,
-                name: 'Шапочка из фольги АПД-aZ',
-                price: 1499,
-                oldPrice: 1890,
-                desc: 'Самый известный способ защиты от УМПИ*. Толстый слой фольги не даст УМПИ достичь мозга, универсальная форма.',
-                img: './images/Hat.jpg',
-                badge: 'Хит',
-                rating: 4.9,
-                reviews: 89,
-                inStock: true
-            }, {
-                id: 3,
-                name: 'Ложка АПД-НТ',
-                price: 1199,
-                oldPrice: 1490,
-                desc: 'Специальная ложка для проведения "ТСЛ". Подходит для турок с носиком и без него. Удобна и практична.',
-                img: './images/Spoon.jpg',
-                badge: 'Новинка',
-                rating: 4.7,
-                reviews: 56,
-                inStock: true
-            },
-                {
-                id: 4,
-                name: 'Фольгированный плащ АПД-Рейн',
-                price: 3499,
-                oldPrice: 4290,
-                desc: 'Защита от дождя и мыслечтения одновременно! Водонепроницаемый плащ с фольгированной подкладкой. Идеален для прогулок в непогоду и сохранения приватности мыслей.',
-                img: './images/Cloak.png',
-                badge: 'Новинка',
-                rating: 4.9,
-                reviews: 67,
-                inStock: true,
-                usage: 'Носите в дождливую погоду — вражеские агенты не смогут прочитать ваши мысли из-за шума капель.',
-            },
-            {
-                id: 5,
-                name: 'Фольгированный чехол для смартфона АПД-Скайнет',
-                price: 899,
-                oldPrice: 1290,
-                desc: 'Защищает ваш телефон от сканирования мозговых волн через камеру. Просто наденьте чехол — и никто не узнает, что вы искали в интернете.',
-                img: './images/Case.png',
-                badge: 'Хит',
-                rating: 4.7,
-                reviews: 234,
-                inStock: true,
-                usage: 'Надевайте перед сном, чтобы смартфон не крал ваши сны через ночной режим.',
-            },
-            {
-                id: 8,
-                name: 'Фольгированные наушники АПД-Безшум',
-                price: 599,
-                oldPrice: 790,
-                desc: 'Наушники для полной изоляции от внешнего шума и мыслеволн. В комплекте — запасные фольгированные амбушюры.',
-                img: './images/Headphones.png',
-                badge: 'Акция',
-                rating: 4.5,
-                reviews: 78,
-                inStock: true,
-                usage: 'Включайте в метро — окружающие не смогут считать ваши мысли через вибрации голосов.',
-            },
-            {
-                id: 11,
-                name: 'Полотенце для трюка АПД-Блокер',
-                price: 699,
-                oldPrice: 890,
-                desc: 'Тканевое полотенце с фольгированной нитью. Накройте любое вражеское устройство — и передача данных мгновенно прекратится! Работает с телефонами, планшетами, ноутбуками и даже с умными колонками. Трюк с полотенцем теперь имеет практическое применение!',
-                img: './images/Towel.png',
-                badge: 'Хит',
-                rating: 4.9,
-                reviews: 312,
-                inStock: true,
-                usage: 'Просто накройте устройство полотенцем — данные перестанут передаваться. Идеально для тайных переговоров в офисе.',
+<script>
+    // маленький скрипт для имитации счётчика корзины (для красоты)
+    document.addEventListener('DOMContentLoaded', function() {
+        const cartCount = document.getElementById('cartCount');
+        // если в localStorage есть корзина — покажем
+        try {
+            const saved = localStorage.getItem('apd_cart');
+            if (saved) {
+                const cart = JSON.parse(saved);
+                const total = cart.reduce((acc, item) => acc + (item.qty || 0), 0);
+                if (total > 0) cartCount.textContent = total;
             }
-        ];
-
-            // ----- состояние -----
-            let cart = [];
-            let currentProductId = null;
-            let inCartStatus = {}; // для кнопок "в корзине"
-
-            // ----- DOM -----
-            const catalogEl = document.getElementById('catalog');
-            const modalOverlay = document.getElementById('modalOverlay');
-            const modalImg = document.getElementById('modalImg');
-            const modalName = document.getElementById('modalName');
-            const modalPrice = document.getElementById('modalPrice');
-            const modalDesc = document.getElementById('modalDesc');
-            const modalAddBtn = document.getElementById('modalAddBtn');
-            const modalCloseBtn = document.getElementById('modalCloseBtn');
-            const cartSidebar = document.getElementById('cartSidebar');
-            const cartItems = document.getElementById('cartItems');
-            const cartCount = document.getElementById('cartCount');
-            const subtotalAmount = document.getElementById('subtotalAmount');
-            const deliveryCost = document.getElementById('deliveryCost');
-            const totalAmount = document.getElementById('totalAmount');
-            const cartCloseBtn = document.getElementById('cartCloseBtn');
-            const cartIcon = document.getElementById('cartIcon');
-            const payBtn = document.getElementById('payBtn');
-            const toast = document.getElementById('toast');
-
-            const payOverlay = document.getElementById('payOverlay');
-            const payTotal = document.getElementById('payTotal');
-            const payProgressBar = document.getElementById('payProgressBar');
-            const payStatus = document.getElementById('payStatus');
-            const payCloseBtn = document.getElementById('payCloseBtn');
-
-            // ----- helpers -----
-            function getProduct(id) { return products.find(p => p.id === id); }
-
-            function getCartTotal() {
-                return cart.reduce((acc, item) => {
-                    const p = getProduct(item.id);
-                    return acc + (p ? p.price * item.qty : 0);
-                }, 0);
-            }
-
-            function getCartCount() { return cart.reduce((acc, item) => acc + item.qty, 0); }
-
-            // ----- рендер каталога -----
-            function renderCatalog() {
-                catalogEl.innerHTML = '';
-                products.forEach(p => {
-                    const card = document.createElement('article');
-                    card.className = 'product-card';
-                    const stars = '⭐'.repeat(Math.floor(p.rating)) + (p.rating % 1 >= 0.5 ? '⭐' : '');
-                    const badgeClass = p.badge === 'Хит' ? 'hit' : p.badge === 'Новинка' ? 'new' : 'popular';
-                    card.innerHTML = `
-                        <div class="product-image" data-id="${p.id}">
-                            <img src="${p.img}" alt="${p.name}" loading="lazy" />
-                            <div class="badges"><span class="badge ${badgeClass}">${p.badge}</span></div>
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">${p.name}</div>
-                            <div class="product-rating">
-                                <span class="stars">${stars}</span>
-                                <span>${p.rating}</span>
-                                <span style="color:var(--text-muted)">(${p.reviews})</span>
-                            </div>
-                            <div class="product-availability ${p.inStock ? '' : 'out'}">${p.inStock ? '✅ В наличии' : '❌ Нет в наличии'}</div>
-                            <div class="product-prices">
-                                ${p.oldPrice ? `<span class="price-old">${p.oldPrice} ₽</span>` : ''}
-                                <span class="price-current">${p.price}</span>
-                            </div>
-                            <div class="product-bottom">
-                                <div class="add-controls">
-                                    <button class="qty-minus" data-id="${p.id}">−</button>
-                                    <span class="qty-display" data-id="${p.id}">1</span>
-                                    <button class="qty-plus" data-id="${p.id}">+</button>
-                                </div>
-                                <button class="product-btn add-cart-btn" data-id="${p.id}">В корзину</button>
-                            </div>
-                        </div>
-                    `;
-                    catalogEl.appendChild(card);
-                });
-
-                // события: картинка -> модалка
-                document.querySelectorAll('.product-image').forEach(el => {
-                    el.addEventListener('click', function() { openModal(parseInt(this.dataset.id)); });
-                });
-
-                // +/- в карточках
-                document.querySelectorAll('.qty-minus').forEach(btn => {
-                    btn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        const id = parseInt(this.dataset.id);
-                        const display = document.querySelector(`.qty-display[data-id="${id}"]`);
-                        let val = parseInt(display.textContent) || 1;
-                        if (val > 1) val--;
-                        display.textContent = val;
-                    });
-                });
-                document.querySelectorAll('.qty-plus').forEach(btn => {
-                    btn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        const id = parseInt(this.dataset.id);
-                        const display = document.querySelector(`.qty-display[data-id="${id}"]`);
-                        let val = parseInt(display.textContent) || 1;
-                        val++;
-                        display.textContent = val;
-                    });
-                });
-
-                // кнопка "В корзину" в карточках
-                document.querySelectorAll('.add-cart-btn').forEach(btn => {
-                    btn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        const id = parseInt(this.dataset.id);
-                        const display = document.querySelector(`.qty-display[data-id="${id}"]`);
-                        const qty = parseInt(display.textContent) || 1;
-                        addToCart(id, qty);
-                        // анимация "летит в корзину" — упрощённо меняем текст
-                        this.textContent = '✓ В корзине';
-                        this.classList.add('in-cart');
-                        setTimeout(() => {
-                            this.textContent = 'В корзину';
-                            this.classList.remove('in-cart');
-                        }, 1500);
-                        showToast(`✅ ${qty} шт. добавлено`);
-                        display.textContent = '1';
-                    });
-                });
-            }
-
-            // ----- модалка -----
-            function openModal(productId) {
-                const p = getProduct(productId);
-                if (!p) return;
-                currentProductId = p.id;
-                modalImg.src = p.img;
-                modalImg.alt = p.name;
-                modalName.textContent = p.name;
-                modalPrice.textContent = p.price;
-                modalDesc.textContent = p.desc;
-                modalOverlay.classList.add('open');
-            }
-
-            function closeModal() {
-                modalOverlay.classList.remove('open');
-                currentProductId = null;
-            }
-
-            // ----- корзина -----
-            function renderCart() {
-                const count = getCartCount();
-                cartCount.textContent = count;
-
-                if (cart.length === 0) {
-                    cartItems.innerHTML = '<div class="cart-empty">Корзина пуста</div>';
-                    subtotalAmount.textContent = '0 ₽';
-                    deliveryCost.textContent = '0 ₽';
-                    totalAmount.textContent = '0 ₽';
-                    return;
-                }
-
-                let html = '';
-                let subtotal = 0;
-                cart.forEach(item => {
-                    const p = getProduct(item.id);
-                    if (!p) return;
-                    subtotal += p.price * item.qty;
-                    html += `
-                        <div class="cart-item" data-id="${item.id}">
-                            <div class="cart-item-img"><img src="${p.img}" alt="${p.name}" /></div>
-                            <div class="cart-item-info">
-                                <div class="cart-item-name">${p.name}</div>
-                                <div class="cart-item-price">${p.price} ₽ × ${item.qty}</div>
-                            </div>
-                            <div class="cart-item-controls">
-                                <button class="cart-qty-minus" data-id="${item.id}">−</button>
-                                <span class="qty">${item.qty}</span>
-                                <button class="cart-qty-plus" data-id="${item.id}">+</button>
-                                <button class="cart-item-remove" data-id="${item.id}">✕</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                cartItems.innerHTML = html;
-
-                const delivery = subtotal >= 3000 ? 0 : 250;
-                const total = subtotal + delivery;
-                subtotalAmount.textContent = subtotal + ' ₽';
-                deliveryCost.textContent = delivery + ' ₽';
-                totalAmount.textContent = total + ' ₽';
-
-                // события в корзине
-                document.querySelectorAll('.cart-qty-minus').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const id = parseInt(this.dataset.id);
-                        const item = cart.find(i => i.id === id);
-                        if (item && item.qty > 1) {
-                            item.qty -= 1;
-                        } else {
-                            cart = cart.filter(i => i.id !== id);
-                        }
-                        renderCart();
-                    });
-                });
-                document.querySelectorAll('.cart-qty-plus').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const id = parseInt(this.dataset.id);
-                        const item = cart.find(i => i.id === id);
-                        if (item) item.qty += 1;
-                        renderCart();
-                    });
-                });
-                document.querySelectorAll('.cart-item-remove').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const id = parseInt(this.dataset.id);
-                        cart = cart.filter(i => i.id !== id);
-                        renderCart();
-                        showToast('🗑️ Товар удалён');
-                    });
-                });
-            }
-
-            function addToCart(productId, qty = 1) {
-                if (qty <= 0) return;
-                const existing = cart.find(item => item.id === productId);
-                if (existing) {
-                    existing.qty += qty;
-                } else {
-                    cart.push({ id: productId, qty: qty });
-                }
-                renderCart();
-            }
-
-            function clearCart() {
-                cart = [];
-                renderCart();
-            }
-
-            // ----- тост -----
-            let toastTimeout = null;
-
-            function showToast(msg) {
-                toast.textContent = msg;
-                toast.classList.add('show');
-                clearTimeout(toastTimeout);
-                toastTimeout = setTimeout(() => toast.classList.remove('show'), 2200);
-            }
-
-            // ----- СИМУЛЯЦИЯ ОПЛАТЫ (банковское окно) -----
-            function startPayment() {
-                if (cart.length === 0) {
-                    showToast('⚠️ Корзина пуста');
-                    return;
-                }
-                const total = getCartTotal() + (getCartTotal() >= 3000 ? 0 : 250);
-                if (total === 0) { showToast('⚠️ Корзина пуста'); return; }
-
-                payOverlay.classList.add('open');
-                payTotal.textContent = total;
-                payProgressBar.style.width = '0%';
-                payStatus.textContent = '🔐 Введите данные карты';
-                payCloseBtn.style.display = 'none';
-
-                let progress = 0;
-                const steps = [
-                    { p: 10, text: '💳 Ввод номера карты...' },
-                    { p: 25, text: '🔑 Проверка CVV...' },
-                    { p: 45, text: '📱 Подтверждение в приложении...' },
-                    { p: 70, text: '⏳ Обработка платежа...' },
-                    { p: 90, text: '✅ Почти готово...' },
-                    { p: 100, text: '✅ Оплата успешно завершена!' }
-                ];
-                let stepIndex = 0;
-
-                const interval = setInterval(() => {
-                    progress += Math.floor(Math.random() * 8) + 3;
-                    if (progress > 100) progress = 100;
-                    payProgressBar.style.width = progress + '%';
-
-                    while (stepIndex < steps.length && progress >= steps[stepIndex].p) {
-                        payStatus.textContent = steps[stepIndex].text;
-                        stepIndex++;
-                    }
-
-                    if (progress >= 100) {
-                        clearInterval(interval);
-                        payStatus.textContent = '✅ Оплата успешно завершена!';
-                        payCloseBtn.style.display = 'inline-block';
-                        clearCart();
-                        cartSidebar.classList.remove('open');
-                        showToast('💳 Оплата прошла успешно!');
-                    }
-                }, 350);
-            }
-
-            // ----- события -----
-            modalAddBtn.addEventListener('click', function() {
-                if (currentProductId) {
-                    addToCart(currentProductId, 1);
-                    showToast('✅ Добавлено в корзину');
-                    closeModal();
-                }
-            });
-            modalCloseBtn.addEventListener('click', closeModal);
-            modalOverlay.addEventListener('click', function(e) {
-                if (e.target === modalOverlay) closeModal();
-            });
-
-            cartIcon.addEventListener('click', function() {
-                cartSidebar.classList.toggle('open');
-                renderCart();
-            });
-            cartCloseBtn.addEventListener('click', function() { cartSidebar.classList.remove('open'); });
-
-            payBtn.addEventListener('click', startPayment);
-
-            payCloseBtn.addEventListener('click', function() { payOverlay.classList.remove('open'); });
-            payOverlay.addEventListener('click', function(e) {
-                if (e.target === payOverlay && payCloseBtn.style.display !== 'none') {
-                    payOverlay.classList.remove('open');
-                }
-            });
-
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    closeModal();
-                    cartSidebar.classList.remove('open');
-                    if (payOverlay.classList.contains('open') && payCloseBtn.style.display !== 'none') {
-                        payOverlay.classList.remove('open');
-                    }
-                }
-            });
-
-            document.addEventListener('click', function(e) {
-                if (cartSidebar.classList.contains('open')) {
-                    const isInside = cartSidebar.contains(e.target) || cartIcon.contains(e.target);
-                    if (!isInside) cartSidebar.classList.remove('open');
-                }
-            });
-
-            // ----- старт -----
-            renderCatalog();
-            renderCart();
-        })();
-    </script>
+        } catch(e) {}
+        // при клике на иконку корзины — переход в магазин (шутка)
+        document.querySelector('.cart-icon-wrap')?.addEventListener('click', function() {
+            window.location.href = 'shop.html';
+        });
+    });
+</script>
 </body>
 </html>

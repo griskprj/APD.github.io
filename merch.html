@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Мерч АПД — Анти-Пендосовское Движение</title>
+    <style>
+        /* ----- базовые сбросы и переменные (как в shop.html) ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-page: #f0f2f6;
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 24px 56px rgba(0, 0, 0, 0.08);
+            --radius-lg: 20px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --primary: #1a1a1e;
+            --accent: #2c2c32;
+            --text-main: #1c1c1e;
+            --text-secondary: #4a4a52;
+            --text-muted: #7a7a82;
+            --gradient-btn: linear-gradient(145deg, #1a1a1e, #2e2e34);
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-page);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 1.5rem 2rem;
+            position: relative;
+            background-image: radial-gradient(circle at 10% 20%, rgba(200, 200, 210, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(180, 180, 190, 0.10) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1360px;
+            width: 100%;
+        }
+
+        /* ----- ШАПКА (как в shop.html) ----- */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem 1.5rem;
+            padding: 1rem 0 0.8rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            margin-bottom: 1.5rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(145deg, #121214, #3a3a42);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .logo small {
+            font-size: 0.8rem;
+            font-weight: 400;
+            -webkit-text-fill-color: #6a6a72;
+            background: none;
+            color: #6a6a72;
+            letter-spacing: 0.2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.15s;
+            padding: 0.3rem 0.2rem;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+            border-bottom-color: var(--primary);
+        }
+
+        .nav-links a.active {
+            color: var(--text-main);
+            border-bottom-color: var(--primary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid rgba(0,0,0,0.08);
+            padding: 0.4rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.85rem;
+        }
+        .btn-ghost:hover {
+            background: rgba(0,0,0,0.03);
+        }
+
+        .cart-icon-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            cursor: pointer;
+            font-size: 1.3rem;
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(4px);
+            padding: 0.2rem 0.9rem;
+            border-radius: 60px;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.2s;
+        }
+        .cart-icon-wrap:hover {
+            background: rgba(255,255,255,0.8);
+        }
+
+        .cart-count {
+            background: #1a1a1e;
+            color: white;
+            font-weight: 600;
+            font-size: 0.7rem;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5px;
+        }
+
+        /* ----- HERO-БАННЕР (как в shop) ----- */
+        .hero {
+            background: linear-gradient(145deg, #1c1c20, #2e2e36);
+            border-radius: var(--radius-lg);
+            padding: 3rem 3.5rem;
+            margin-bottom: 2.5rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-left h2 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.3rem;
+        }
+
+        .hero-left p {
+            font-size: 1.1rem;
+            opacity: 0.7;
+            font-weight: 300;
+        }
+
+        .hero-tag {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(4px);
+            padding: 0.6rem 1.8rem;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            font-weight: 500;
+        }
+
+        /* ----- БЛОК ПРЕИМУЩЕСТВ ----- */
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2.5rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem 2rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .benefit-item span:first-child {
+            font-size: 1.5rem;
+        }
+
+        /* ----- СЕТКА МЕРЧА (как catalog в shop) ----- */
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .merch-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .merch-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(255, 255, 255, 0.7);
+        }
+
+        .merch-image {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #eef0f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.3rem;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .merch-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+            border-radius: var(--radius-sm);
+        }
+
+        .merch-card:hover .merch-image img {
+            transform: scale(1.02);
+        }
+
+        /* бейджи */
+        .badges {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .badge {
+            background: rgba(26, 26, 30, 0.85);
+            backdrop-filter: blur(4px);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.2rem 0.7rem;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        .badge.hit {
+            background: rgba(200, 50, 50, 0.85);
+        }
+
+        .badge.new {
+            background: rgba(30, 120, 80, 0.85);
+        }
+
+        .badge.popular {
+            background: rgba(200, 160, 40, 0.85);
+        }
+
+        .badge.limited {
+            background: rgba(180, 120, 30, 0.85);
+        }
+
+        .merch-info {
+            padding: 1rem 1rem 1.2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .merch-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.25rem;
+            line-height: 1.3;
+        }
+
+        .merch-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            margin-bottom: 0.4rem;
+            flex: 1;
+        }
+
+        .merch-prices {
+            display: flex;
+            align-items: baseline;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+            margin-top: 0.2rem;
+        }
+
+        .price-old {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .price-current {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+        }
+
+        .price-current::after {
+            content: ' ₽';
+            font-weight: 400;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-left: 2px;
+        }
+
+        .merch-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.8rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.03);
+            padding-top: 0.8rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .add-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .add-controls button {
+            background: rgba(0, 0, 0, 0.03);
+            border: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.15s;
+            color: var(--text-main);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .add-controls button:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        .add-controls .qty-display {
+            min-width: 24px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .buy-btn {
+            background: var(--gradient-btn);
+            border: none;
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .buy-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .buy-btn:hover::after {
+            opacity: 1;
+        }
+
+        .buy-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+        }
+
+        .buy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .buy-btn.in-cart {
+            background: #2a7a4a;
+        }
+
+        /* ----- ФУТЕР (как в shop) ----- */
+        .footer {
+            margin-top: 2.5rem;
+            padding: 2rem 0 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.04);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .footer-col h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col a,
+        .footer-col p {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0.2rem 0;
+            transition: color 0.15s;
+        }
+
+        .footer-col a:hover {
+            color: var(--text-main);
+        }
+
+        .footer-col .social {
+            display: flex;
+            gap: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* ----- ТОСТ (как в shop) ----- */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(26, 26, 30, 0.92);
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 0.7rem 2rem;
+            border-radius: 60px;
+            font-weight: 500;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* ----- АДАПТИВ (как в shop) ----- */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .header-left {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+            .header-right {
+                justify-content: center;
+            }
+            .hero {
+                padding: 2rem 1.5rem;
+            }
+            .hero-left h2 {
+                font-size: 1.8rem;
+            }
+            .merch-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 1rem;
+            }
+            .benefits {
+                grid-template-columns: 1fr 1fr;
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .merch-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+            }
+            .merch-info {
+                padding: 0.6rem 0.6rem 0.9rem;
+            }
+            .merch-name {
+                font-size: 0.8rem;
+            }
+            .price-current {
+                font-size: 1.1rem;
+            }
+            .buy-btn {
+                font-size: 0.65rem;
+                padding: 0.2rem 0.8rem;
+            }
+            .add-controls button {
+                width: 22px;
+                height: 22px;
+                font-size: 0.7rem;
+            }
+            .hero-left h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ШАПКА (как в shop.html) -->
+        <header class="header">
+            <div class="header-left">
+                <a href="#" class="logo">
+                    <span class="logo-icon">🛡️</span> АПД
+                    <small>мерч</small>
+                </a>
+                <nav class="nav-links">
+                    <a href="index.html">О движении</a>
+                    <a href="shop.html">Магазин</a>
+                    <a href="merch.html" class="active">Мерч</a>
+                    <a href="service.html">Услуги</a>
+                    <a href="course.html">Курсы</a>
+                </nav>
+            </div>
+            <div class="header-right">
+                <button class="btn-ghost">Войти</button>
+                <div class="cart-icon-wrap" id="cartIcon">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- HERO-БАННЕР -->
+        <div class="hero">
+            <div class="hero-left">
+                <h2>🔥 Брендовая экипировка АПД</h2>
+                <p>Носите защиту с собой в любой ситуации</p>
+            </div>
+            <div class="hero-tag">👕 6 позиций · доставка от 3000 ₽</div>
+        </div>
+
+        <!-- ПРЕИМУЩЕСТВА -->
+        <div class="benefits">
+            <div class="benefit-item"><span>🧵</span> Качество 100%</div>
+            <div class="benefit-item"><span>🛡️</span> Фольга внутри</div>
+            <div class="benefit-item"><span>⭐</span> Хиты сезона</div>
+            <div class="benefit-item"><span>📦</span> Быстрая доставка</div>
+        </div>
+
+        <!-- СЕТКА МЕРЧА -->
+        <section class="merch-grid" id="merchGrid">
+            <!-- Товар 1 -->
+            <article class="merch-card">
+                <div class="merch-image">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23e8eaf0'/%3E%3Ctext x='50%25' y='50%25' font-size='40' font-family='Arial' fill='%236a6a72' text-anchor='middle' dy='.3em'%3E👕%3C/text%3E%3C/svg%3E"
+                         alt="Футболка АПД" loading="lazy" />
+                    <div class="badges"><span class="badge hit">Хит</span></div>
+                </div>
+                <div class="merch-info">
+                    <h3 class="merch-name">Футболка "Я в шапочке"</h3>
+                    <p class="merch-desc">Чёрный хлопок с принтом шапочки из фольги и надписью "Мои мысли под защитой"</p>
+                    <div class="merch-prices">
+                        <span class="price-old">1 990 ₽</span>
+                        <span class="price-current">1 499</span>
+                    </div>
+                    <div class="merch-bottom">
+                        <div class="add-controls">
+                            <button class="qty-minus" data-id="m1">−</button>
+                            <span class="qty-display" data-id="m1">1</span>
+                            <button class="qty-plus" data-id="m1">+</button>
+                        </div>
+                        <button class="buy-btn" data-id="m1">В корзину</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Товар 2 -->
+            <article class="merch-card">
+                <div class="merch-image">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23e8eaf0'/%3E%3Ctext x='50%25' y='50%25' font-size='40' font-family='Arial' fill='%236a6a72' text-anchor='middle' dy='.3em'%3E🧥%3C/text%3E%3C/svg%3E"
+                         alt="Худи АПД" loading="lazy" />
+                    <div class="badges"><span class="badge new">Новинка</span></div>
+                </div>
+                <div class="merch-info">
+                    <h3 class="merch-name">Худи "АПД"</h3>
+                    <p class="merch-desc">Тёплое худи с логотипом. Вшитая фольгированная подкладка в капюшоне</p>
+                    <div class="merch-prices">
+                        <span class="price-old">3 490 ₽</span>
+                        <span class="price-current">2 499</span>
+                    </div>
+                    <div class="merch-bottom">
+                        <div class="add-controls">
+                            <button class="qty-minus" data-id="m2">−</button>
+                            <span class="qty-display" data-id="m2">1</span>
+                            <button class="qty-plus" data-id="m2">+</button>
+                        </div>
+                        <button class="buy-btn" data-id="m2">В корзину</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Товар 3 -->
+            <article class="merch-card">
+                <div class="merch-image">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23e8eaf0'/%3E%3Ctext x='50%25' y='50%25' font-size='40' font-family='Arial' fill='%236a6a72' text-anchor='middle' dy='.3em'%3E📛%3C/text%3E%3C/svg%3E"
+                         alt="Значок АПД" loading="lazy" />
+                    <div class="badges"><span class="badge limited">Лимит</span></div>
+                </div>
+                <div class="merch-info">
+                    <h3 class="merch-name">Значок "АПД-агент"</h3>
+                    <p class="merch-desc">Светящийся значок. Агентам скидка на всё! Идеально для тайных встреч</p>
+                    <div class="merch-prices">
+                        <span class="price-old">399 ₽</span>
+                        <span class="price-current">299</span>
+                    </div>
+                    <div class="merch-bottom">
+                        <div class="add-controls">
+                            <button class="qty-minus" data-id="m3">−</button>
+                            <span class="qty-display" data-id="m3">1</span>
+                            <button class="qty-plus" data-id="m3">+</button>
+                        </div>
+                        <button class="buy-btn" data-id="m3">В корзину</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Товар 4 -->
+            <article class="merch-card">
+                <div class="merch-image">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23e8eaf0'/%3E%3Ctext x='50%25' y='50%25' font-size='40' font-family='Arial' fill='%236a6a72' text-anchor='middle' dy='.3em'%3E☕%3C/text%3E%3C/svg%3E"
+                         alt="Кружка АПД" loading="lazy" />
+                    <div class="badges"><span class="badge hit">Хит</span></div>
+                </div>
+                <div class="merch-info">
+                    <h3 class="merch-name">Кружка "Фольга внутри"</h3>
+                    <p class="merch-desc">Керамика с изображением фольги — напитки сохраняют температуру дольше (и мысли — тоже)</p>
+                    <div class="merch-prices">
+                        <span class="price-old">799 ₽</span>
+                        <span class="price-current">599</span>
+                    </div>
+                    <div class="merch-bottom">
+                        <div class="add-controls">
+                            <button class="qty-minus" data-id="m4">−</button>
+                            <span class="qty-display" data-id="m4">1</span>
+                            <button class="qty-plus" data-id="m4">+</button>
+                        </div>
+                        <button class="buy-btn" data-id="m4">В корзину</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Товар 5 -->
+            <article class="merch-card">
+                <div class="merch-image">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23e8eaf0'/%3E%3Ctext x='50%25' y='50%25' font-size='40' font-family='Arial' fill='%236a6a72' text-anchor='middle' dy='.3em'%3E📎%3C/text%3E%3C/svg%3E"
+                         alt="Стикерпак АПД" loading="lazy" />
+                    <div class="badges"><span class="badge new">Новинка</span></div>
+                </div>
+                <div class="merch-info">
+                    <h3 class="merch-name">Стикерпак "АПД"</h3>
+                    <p class="merch-desc">Набор из 10 стикеров с мемами и логотипом. Для ноутбука, телефона и вражеских устройств</p>
+                    <div class="merch-prices">
+                        <span class="price-old">299 ₽</span>
+                        <span class="price-current">199</span>
+                    </div>
+                    <div class="merch-bottom">
+                        <div class="add-controls">
+                            <button class="qty-minus" data-id="m5">−</button>
+                            <span class="qty-display" data-id="m5">1</span>
+                            <button class="qty-plus" data-id="m5">+</button>
+                        </div>
+                        <button class="buy-btn" data-id="m5">В корзину</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Товар 6 -->
+            <article class="merch-card">
+                <div class="merch-image">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23e8eaf0'/%3E%3Ctext x='50%25' y='50%25' font-size='40' font-family='Arial' fill='%236a6a72' text-anchor='middle' dy='.3em'%3E🛍️%3C/text%3E%3C/svg%3E"
+                         alt="Шопер АПД" loading="lazy" />
+                    <div class="badges"><span class="badge limited">Лимит</span></div>
+                </div>
+                <div class="merch-info">
+                    <h3 class="merch-name">Шопер "АПД"</h3>
+                    <p class="merch-desc">Холщовая сумка с надписью "Внутри — мои мысли. Не пытайтесь их прочитать"</p>
+                    <div class="merch-prices">
+                        <span class="price-old">899 ₽</span>
+                        <span class="price-current">699</span>
+                    </div>
+                    <div class="merch-bottom">
+                        <div class="add-controls">
+                            <button class="qty-minus" data-id="m6">−</button>
+                            <span class="qty-display" data-id="m6">1</span>
+                            <button class="qty-plus" data-id="m6">+</button>
+                        </div>
+                        <button class="buy-btn" data-id="m6">В корзину</button>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- ФУТЕР -->
+        <footer class="footer">
+            <div class="footer-col">
+                <h4>Контакты</h4>
+                <p>📞 +7 (988) 405-91-11</p>
+                <p>📧 griskyy@yandex.ru</p>
+            </div>
+            <div class="footer-col">
+                <h4>Информация</h4>
+                <a href="#">Политика конфиденциальности</a>
+                <a href="#">Оферта</a>
+                <a href="#">Вакансии</a>
+            </div>
+            <div class="footer-col">
+                <h4>Способы оплаты</h4>
+                <p>💳 МИР</p>
+                <p>📱 СБП</p>
+            </div>
+            <div class="footer-col">
+                <h4>Мы в соцсетях</h4>
+                <div class="social">
+                    <span><a href="https://web.max.ru/-77594313556719">Макс</a></span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ТОСТ -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        (function() {
+            // ----- состояние корзины -----
+            let cart = [];
+            let totalItems = 0;
+            const cartCount = document.getElementById('cartCount');
+            const toast = document.getElementById('toast');
+            const cartIcon = document.getElementById('cartIcon');
+            let toastTimeout = null;
+
+            function showToast(msg) {
+                toast.textContent = msg;
+                toast.classList.add('show');
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => toast.classList.remove('show'), 2200);
+            }
+
+            function updateCartCount() {
+                totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+                cartCount.textContent = totalItems;
+            }
+
+            function addToCart(productId, qty) {
+                const existing = cart.find(item => item.id === productId);
+                if (existing) {
+                    existing.qty += qty;
+                } else {
+                    cart.push({ id: productId, qty: qty });
+                }
+                updateCartCount();
+            }
+
+            // ----- события для +/- и кнопок -----
+            document.querySelectorAll('.merch-card').forEach(card => {
+                const minusBtn = card.querySelector('.qty-minus');
+                const plusBtn = card.querySelector('.qty-plus');
+                const display = card.querySelector('.qty-display');
+                const buyBtn = card.querySelector('.buy-btn');
+                const id = buyBtn.dataset.id;
+
+                minusBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    let val = parseInt(display.textContent) || 1;
+                    if (val > 1) val--;
+                    display.textContent = val;
+                });
+
+                plusBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    let val = parseInt(display.textContent) || 1;
+                    val++;
+                    display.textContent = val;
+                });
+
+                buyBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const qty = parseInt(display.textContent) || 1;
+                    addToCart(id, qty);
+                    this.textContent = '✓ В корзине';
+                    this.classList.add('in-cart');
+                    showToast(`✅ ${qty} шт. добавлено в корзину`);
+                    setTimeout(() => {
+                        this.textContent = 'В корзину';
+                        this.classList.remove('in-cart');
+                    }, 1500);
+                    display.textContent = '1';
+                });
+            });
+
+            // клик по корзине — показываем статус
+            if (cartIcon) {
+                cartIcon.addEventListener('click', function() {
+                    if (totalItems === 0) {
+                        showToast('🛒 Корзина пуста');
+                    } else {
+                        showToast(`🛒 В корзине ${totalItems} товаров`);
+                    }
+                });
+            }
+        })();
+    </script>
+
+</body>
+</html>
