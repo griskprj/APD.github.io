@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>АПД — магазин защиты</title>
+    <title>Курсы АПД — Анти-Пендосовское Движение</title>
     <style>
-        /* ----- базовые сбросы и переменные ----- */
+        /* ----- базовые сбросы и переменные (как в shop.html) ----- */
         * {
             margin: 0;
             padding: 0;
@@ -39,12 +39,10 @@
             flex-direction: column;
             align-items: center;
             padding: 0 1.5rem 2rem;
-            position: relative;
             background-image: radial-gradient(circle at 10% 20%, rgba(200, 200, 210, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 90% 80%, rgba(180, 180, 190, 0.10) 0%, transparent 50%);
         }
 
-        /* ----- контейнер ----- */
         .container {
             max-width: 1360px;
             width: 100%;
@@ -150,6 +148,7 @@
             padding: 0.2rem 0.9rem;
             border-radius: 60px;
             border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.2s;
         }
         .cart-icon-wrap:hover {
             background: rgba(255,255,255,0.8);
@@ -169,7 +168,7 @@
             padding: 0 5px;
         }
 
-        /* ----- HERO-БАННЕР ----- */
+        /* ----- HERO (как в shop) ----- */
         .hero {
             background: linear-gradient(145deg, #1c1c20, #2e2e36);
             border-radius: var(--radius-lg);
@@ -219,7 +218,7 @@
             font-weight: 500;
         }
 
-        /* ----- БЛОК ПРЕИМУЩЕСТВ ----- */
+        /* ----- ПРЕИМУЩЕСТВА (как в shop) ----- */
         .benefits {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -245,15 +244,15 @@
             font-size: 1.5rem;
         }
 
-        /* ----- СЕТКА ТОВАРОВ (как Ozon/WB) ----- */
-        .catalog {
+        /* ----- СЕТКА КУРСОВ (как catalog в shop) ----- */
+        .courses-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
             gap: 1.8rem;
             margin-bottom: 2.5rem;
         }
 
-        .product-card {
+        .course-card {
             background: var(--card-bg);
             backdrop-filter: blur(8px);
             border-radius: var(--radius-lg);
@@ -266,26 +265,28 @@
             position: relative;
         }
 
-        .product-card:hover {
+        .course-card:hover {
             transform: translateY(-6px);
             box-shadow: var(--shadow-hover);
             border-color: rgba(255, 255, 255, 0.7);
         }
 
-        .product-image {
+        .course-image {
             width: 100%;
             aspect-ratio: 1 / 1;
             background: #eef0f4;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 4rem;
             padding: 0.3rem;
-            cursor: pointer;
             position: relative;
             overflow: hidden;
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+            cursor: pointer;
         }
 
-        .product-image img {
+        .course-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -294,8 +295,9 @@
             border-radius: var(--radius-sm);
         }
 
-        .product-card:hover .product-image img {
-            transform: scale(1.02);
+        .course-image .emoji-big {
+            font-size: 4.5rem;
+            line-height: 1;
         }
 
         /* бейджи */
@@ -332,120 +334,71 @@
             background: rgba(200, 160, 40, 0.85);
         }
 
-        .product-info {
+        .badge.pro {
+            background: rgba(40, 100, 200, 0.85);
+        }
+
+        .badge.online {
+            background: rgba(150, 40, 200, 0.85);
+        }
+
+        .course-info {
             padding: 1rem 1rem 1.2rem;
             flex: 1;
             display: flex;
             flex-direction: column;
         }
 
-        .product-name {
-            font-size: 1rem;
+        .course-name {
+            font-size: 1.05rem;
             font-weight: 600;
             color: var(--text-main);
             margin-bottom: 0.25rem;
             line-height: 1.3;
         }
 
-        .product-rating {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.8rem;
+        .course-desc {
+            font-size: 0.85rem;
             color: var(--text-secondary);
-            margin-bottom: 0.3rem;
+            line-height: 1.5;
+            margin-bottom: 0.6rem;
+            flex: 1;
         }
 
-        .product-rating .stars {
-            color: #f5b342;
-            letter-spacing: 1px;
-        }
-
-        .product-availability {
-            font-size: 0.75rem;
-            color: #2a7a4a;
-            font-weight: 500;
-            margin-bottom: 0.4rem;
-        }
-
-        .product-availability.out {
-            color: #b03a3a;
-        }
-
-        .product-prices {
+        .course-meta {
             display: flex;
-            align-items: baseline;
-            gap: 0.7rem;
+            justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(0, 0, 0, 0.03);
+            padding-top: 0.7rem;
             margin-top: 0.2rem;
         }
 
-        .price-old {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            text-decoration: line-through;
+        .course-meta .duration {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
         }
 
-        .price-current {
-            font-size: 1.4rem;
+        .course-price {
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--text-main);
-            letter-spacing: -0.3px;
         }
 
-        .price-current::after {
+        .course-price::after {
             content: ' ₽';
             font-weight: 400;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             margin-left: 2px;
         }
 
-        .product-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 0.8rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.03);
-            padding-top: 0.8rem;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .add-controls {
-            display: flex;
-            align-items: center;
-            gap: 0.2rem;
-        }
-
-        .add-controls button {
-            background: rgba(0, 0, 0, 0.03);
-            border: none;
-            width: 26px;
-            height: 26px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: background 0.15s;
-            color: var(--text-main);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .add-controls button:hover {
-            background: rgba(0, 0, 0, 0.08);
-        }
-
-        .add-controls .qty-display {
-            min-width: 24px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .product-btn {
+        .course-btn {
             background: var(--gradient-btn);
             border: none;
             color: white;
@@ -455,13 +408,12 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
-            letter-spacing: 0.2px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
             position: relative;
             overflow: hidden;
         }
 
-        .product-btn::after {
+        .course-btn::after {
             content: '';
             position: absolute;
             top: -50%;
@@ -473,24 +425,24 @@
             transition: opacity 0.3s;
         }
 
-        .product-btn:hover::after {
+        .course-btn:hover::after {
             opacity: 1;
         }
 
-        .product-btn:hover {
+        .course-btn:hover {
             transform: scale(1.02);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
         }
 
-        .product-btn:active {
+        .course-btn:active {
             transform: scale(0.95);
         }
 
-        .product-btn.in-cart {
+        .course-btn.in-cart {
             background: #2a7a4a;
         }
 
-        /* ----- модалка (детальный просмотр) ----- */
+        /* ----- МОДАЛКА (детальный просмотр, как в shop) ----- */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -542,13 +494,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 4rem;
         }
 
-        .modal-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
+        .modal-image .emoji-big {
+            font-size: 5rem;
         }
 
         .modal-body {
@@ -582,6 +532,12 @@
             margin-bottom: 1.5rem;
         }
 
+        .modal-body .modal-duration {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+        }
+
         .modal-actions {
             display: flex;
             gap: 1rem;
@@ -604,7 +560,7 @@
             background: rgba(0, 0, 0, 0.08);
         }
 
-        /* ----- КОРЗИНА (сайдбар) улучшенная ----- */
+        /* ----- КОРЗИНА (сайдбар, как в shop) ----- */
         .cart-sidebar {
             display: none;
             position: fixed;
@@ -682,12 +638,10 @@
             background: #eef0f4;
             overflow: hidden;
             flex-shrink: 0;
-        }
-
-        .cart-item-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
         }
 
         .cart-item-info {
@@ -796,7 +750,7 @@
             font-size: 1rem;
         }
 
-        /* ----- БАНКОВСКОЕ ОКНО ОПЛАТЫ ----- */
+        /* ----- БАНКОВСКОЕ ОКНО ОПЛАТЫ (как в shop) ----- */
         .pay-overlay {
             display: none;
             position: fixed;
@@ -911,7 +865,7 @@
             background: rgba(0, 0, 0, 0.08);
         }
 
-        /* ----- ФУТЕР ----- */
+        /* ----- ФУТЕР (как в shop) ----- */
         .footer {
             margin-top: 2.5rem;
             padding: 2rem 0 1.5rem;
@@ -950,7 +904,7 @@
             font-size: 1.3rem;
         }
 
-        /* ----- ТОСТ ----- */
+        /* ----- ТОСТ (как в shop) ----- */
         .toast {
             position: fixed;
             bottom: 2rem;
@@ -975,7 +929,7 @@
             opacity: 1;
         }
 
-        /* ----- адаптив ----- */
+        /* ----- АДАПТИВ (как в shop) ----- */
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -984,9 +938,6 @@
             .header-left {
                 flex-direction: column;
                 align-items: stretch;
-            }
-            .search-wrap {
-                width: 100%;
             }
             .nav-links {
                 justify-content: center;
@@ -1000,43 +951,38 @@
             .hero-left h2 {
                 font-size: 1.8rem;
             }
-            .catalog {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            .courses-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
                 gap: 1rem;
+            }
+            .benefits {
+                grid-template-columns: 1fr 1fr;
+                padding: 1rem;
             }
             .cart-sidebar {
                 width: 100%;
                 max-width: 100%;
                 border-left: none;
             }
-            .benefits {
-                grid-template-columns: 1fr 1fr;
-                padding: 1rem;
-            }
         }
 
         @media (max-width: 480px) {
-            .catalog {
+            .courses-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 0.8rem;
             }
-            .product-info {
+            .course-info {
                 padding: 0.6rem 0.6rem 0.9rem;
             }
-            .product-name {
+            .course-name {
                 font-size: 0.8rem;
             }
-            .price-current {
-                font-size: 1.1rem;
+            .course-price {
+                font-size: 1rem;
             }
-            .product-btn {
+            .course-btn {
                 font-size: 0.65rem;
                 padding: 0.2rem 0.8rem;
-            }
-            .add-controls button {
-                width: 22px;
-                height: 22px;
-                font-size: 0.7rem;
             }
             .hero-left h2 {
                 font-size: 1.4rem;
@@ -1049,47 +995,135 @@
 
         <!-- ШАПКА -->
         <header class="header">
-            <div class="header-right">
+            <div class="header-left">
                 <a href="index.html" class="logo">
                     <span class="logo-icon">🛡️</span> АПД
                     <small>Анти-Пендосовское Движение</small>
                 </a>
                 <nav class="nav-links">
                     <a href="index.html">О движении</a>
-                    <a href="shop.html" class="active">Магазин</a>
+                    <a href="shop.html">Магазин</a>
                     <a href="merch.html">Мерч</a>
                     <a href="services.html">Услуги</a>
-                    <a href="courses.html">Курсы</a>
+                    <a href="courses.html" class="active">Курсы</a>
                 </nav>
             </div>
             <div class="header-right">
                 <button class="btn-ghost">Войти</button>
-                <div id="cartIcon" class="cart-icon-wrap">
+                <div class="cart-icon-wrap" id="cartIcon">
                     🛒
                     <span class="cart-count" id="cartCount">0</span>
                 </div>
             </div>
         </header>
 
-        <!-- HERO-БАННЕР -->
+        <!-- HERO -->
         <div class="hero">
             <div class="hero-left">
-                <h2>🛡️ Защита нового поколения</h2>
-                <p>Бесплатная доставка от 3000 ₽</p>
+                <h2>🎓 Курсы АПД</h2>
+                <p>Обучение ментальной самозащите и противодействию УМПИ*</p>
             </div>
-            <div class="hero-tag">🔥 Акция до конца месяца</div>
+            <div class="hero-tag">📜 Сертификат · 4 программы</div>
         </div>
 
         <!-- ПРЕИМУЩЕСТВА -->
         <div class="benefits">
-            <div class="benefit-item"><span>🚚</span> Быстрая доставка</div>
-            <div class="benefit-item"><span>🔒</span> Безопасная оплата</div>
-            <div class="benefit-item"><span>⭐</span> Гарантия качества</div>
-            <div class="benefit-item"><span>📦</span> Возврат 14 дней</div>
+            <div class="benefit-item"><span>🧑‍🏫</span> Опытные инструкторы</div>
+            <div class="benefit-item"><span>📡</span> Практические занятия</div>
+            <div class="benefit-item"><span>📜</span> Сертификат АПД</div>
+            <div class="benefit-item"><span>🔄</span> Пожизненный доступ</div>
         </div>
 
-        <!-- КАТАЛОГ -->
-        <section class="catalog" id="catalog"></section>
+        <!-- СЕТКА КУРСОВ -->
+        <section class="courses-grid" id="coursesGrid">
+            <!-- Курс 1 -->
+            <article class="course-card" data-id="c1" data-name="Основы ментальной гигиены" data-price="4900" data-duration="8 часов" data-desc="Базовый курс по выявлению и блокировке УМПИ*. Изучение фольгирования, распознавание угроз." data-emoji="🧠" data-badge="Хит">
+                <div class="course-image">
+                    <img src="./images/CourseMentalG.png" alt="Основы ментальной гигиены">
+                    <div class="badges"><span class="badge hit">Хит</span></div>
+                </div>
+                <div class="course-info">
+                    <h3 class="course-name">Основы ментальной гигиены</h3>
+                    <p class="course-desc">Базовый курс по выявлению и блокировке УМПИ*. Изучение фольгирования, распознавание угроз.</p>
+                    <div class="course-meta">
+                        <span class="duration">⏱️ 8 часов</span>
+                        <span class="course-price">4 900</span>
+                    </div>
+                    <div style="margin-top: 0.7rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="course-btn" data-id="c1">Записаться</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Курс 2 -->
+            <article class="course-card" data-id="c2" data-name="Продвинутая защита" data-price="8900" data-duration="16 часов" data-desc="Глубокое погружение в технологии блокировки. Работа с групповыми угрозами и аномалиями." data-emoji="🛡️" data-badge="Популярное">
+                <div class="course-image">
+                    <img src="./images/ProDefence.png" alt="Продвинутая защита">
+                    <div class="badges"><span class="badge popular">Популярное</span></div>
+                </div>
+                <div class="course-info">
+                    <h3 class="course-name">Продвинутая защита</h3>
+                    <p class="course-desc">Глубокое погружение в технологии блокировки. Работа с групповыми угрозами и аномалиями.</p>
+                    <div class="course-meta">
+                        <span class="duration">⏱️ 16 часов</span>
+                        <span class="course-price">8 900</span>
+                    </div>
+                    <div style="margin-top: 0.7rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="course-btn" data-id="c2">Записаться</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Курс 5 -->
+            <article class="course-card" data-id="c5" data-name="Лабораторный практикум" data-price="12900" data-duration="20 часов" data-desc="Работа с образцами, анализ фольги, создание индивидуальных защитных решений. Для продвинутых." data-emoji="🔬" data-badge="Профи">
+                <div class="course-image">
+                    <img src="./images/LabPractice.png" alt="Лабораторный практикум">
+                    <div class="badges"><span class="badge pro">Профи</span></div>
+                </div>
+                <div class="course-info">
+                    <h3 class="course-name">Лабораторный практикум</h3>
+                    <p class="course-desc">Работа с образцами, анализ фольги, создание индивидуальных защитных решений. Для продвинутых.</p>
+                    <div class="course-meta">
+                        <span class="duration">⏱️ 20 часов</span>
+                        <span class="course-price">12 900</span>
+                    </div>
+                    <div style="margin-top: 0.7rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="course-btn" data-id="c5">Записаться</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Курс 6 -->
+            <article class="course-card" data-id="c6" data-name="Полевой выезд" data-price="18900" data-duration="3 дня" data-desc="Трёхдневный выезд на местность с повышенной УМПИ-активностью. Реальная практика и командная работа." data-emoji="🌍" data-badge="Хит">
+                <div class="course-image">
+                    <img src="./images/Lager.png" alt="">
+                    <div class="badges"><span class="badge hit">Хит</span></div>
+                </div>
+                <div class="course-info">
+                    <h3 class="course-name">Полевой выезд</h3>
+                    <p class="course-desc">Трёхдневный выезд на местность с повышенной УМПИ-активностью. Реальная практика и командная работа.</p>
+                    <div class="course-meta">
+                        <span class="duration">⏱️ 3 дня</span>
+                        <span class="course-price">18 900</span>
+                    </div>
+                    <div style="margin-top: 0.7rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="course-btn" data-id="c6">Записаться</button>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- Дополнительный блок: "Что вы получите" -->
+        <div style="background: var(--glass-bg); backdrop-filter: blur(8px); border-radius: var(--radius-lg); padding: 2rem 2.5rem; border: 1px solid var(--glass-border); margin-bottom: 1.5rem;">
+            <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 0.8rem;">📜 Что дают курсы АПД</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1rem;">
+                <div><span style="font-weight: 600;">📄 Сертификат</span> — официальное подтверждение прохождения курса.</div>
+                <div><span style="font-weight: 600;">🧠 Навыки</span> — вы научитесь распознавать и блокировать УМПИ*.</div>
+                <div><span style="font-weight: 600;">🛡️ Защита</span> — получите индивидуальный план защиты.</div>
+                <div><span style="font-weight: 600;">🤝 Сообщество</span> — доступ в закрытый клуб агентов АПД.</div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted);">* УМПИ — Ультра-Ментальное Пендосовское Излучение (термин АПД).</p>
+        </div>
 
         <!-- ФУТЕР -->
         <footer class="footer">
@@ -1121,13 +1155,16 @@
     <!-- МОДАЛКА (детальный просмотр) -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-card">
-            <div class="modal-image"><img src="" alt="детально" id="modalImg" /></div>
+            <div class="modal-image">
+                <span class="emoji-big" id="modalEmoji">🧠</span>
+            </div>
             <div class="modal-body">
                 <h2 id="modalName">Название</h2>
                 <div class="modal-price" id="modalPrice">0</div>
+                <div class="modal-duration" id="modalDuration">⏱️ 0 часов</div>
                 <p class="modal-desc" id="modalDesc">Описание</p>
                 <div class="modal-actions">
-                    <button class="product-btn" id="modalAddBtn">➕ Добавить</button>
+                    <button class="course-btn" id="modalAddBtn">➕ Записаться</button>
                     <button class="modal-close" id="modalCloseBtn">Закрыть</button>
                 </div>
             </div>
@@ -1142,7 +1179,7 @@
         </div>
         <div class="cart-items" id="cartItems"><div class="cart-empty">Корзина пуста</div></div>
         <div class="cart-summary" id="cartSummary">
-            <div class="row"><span>Товары</span><span id="subtotalAmount">0 ₽</span></div>
+            <div class="row"><span>Курсы</span><span id="subtotalAmount">0 ₽</span></div>
             <div class="row"><span>Доставка</span><span id="deliveryCost">0 ₽</span></div>
             <div class="row total"><span>Итого</span><span id="totalAmount">0 ₽</span></div>
             <button class="cart-pay-btn" id="payBtn">💳 Оплатить</button>
@@ -1157,7 +1194,7 @@
                 <span>🔒 защищено</span>
             </div>
             <div class="pay-icon">💳</div>
-            <h3>Оплата заказа</h3>
+            <h3>Оплата курсов</h3>
             <div class="pay-amount"><small>Сумма</small><br /><span id="payTotal">0</span> ₽</div>
             <div class="pay-progress"><div class="bar" id="payProgressBar"></div></div>
             <div class="pay-status" id="payStatus">Введите данные карты...</div>
@@ -1170,120 +1207,48 @@
 
     <script>
         (function() {
-            // ----- ТОВАРЫ (содержание сохранено) -----
-            const products = [{
-                id: 1,
-                name: 'Фольгированные беруши АПД-2',
-                price: 990,
-                oldPrice: 1290,
-                desc: 'Фольгированные беруши сберегут ваш мозг от ультразвуковых волн. Надёжная защита в любых условиях.',
-                img: './images/Folg.jpg',
-                badge: 'Выбор покупателей',
-                rating: 4.8,
-                reviews: 124,
-                inStock: true
-            }, {
-                id: 2,
-                name: 'Шапочка из фольги АПД-aZ',
-                price: 1499,
-                oldPrice: 1890,
-                desc: 'Самый известный способ защиты от УМПИ*. Толстый слой фольги не даст УМПИ достичь мозга, универсальная форма.',
-                img: './images/Hat.jpg',
-                badge: 'Хит',
-                rating: 4.9,
-                reviews: 89,
-                inStock: true
-            }, {
-                id: 3,
-                name: 'Ложка АПД-НТ',
-                price: 1199,
-                oldPrice: 1490,
-                desc: 'Специальная ложка для проведения "ТСЛ". Подходит для турок с носиком и без него. Удобна и практична.',
-                img: './images/Spoon.jpg',
-                badge: 'Новинка',
-                rating: 4.7,
-                reviews: 56,
-                inStock: true
-            },
-                {
-                id: 4,
-                name: 'Фольгированный плащ АПД-Рейн',
-                price: 3499,
-                oldPrice: 4290,
-                desc: 'Защита от дождя и мыслечтения одновременно! Водонепроницаемый плащ с фольгированной подкладкой. Идеален для прогулок в непогоду и сохранения приватности мыслей.',
-                img: './images/Cloak.png',
-                badge: 'Новинка',
-                rating: 4.9,
-                reviews: 67,
-                inStock: true,
-                usage: 'Носите в дождливую погоду — вражеские агенты не смогут прочитать ваши мысли из-за шума капель.',
-            },
-            {
-                id: 5,
-                name: 'Фольгированный чехол для смартфона АПД-Скайнет',
-                price: 899,
-                oldPrice: 1290,
-                desc: 'Защищает ваш телефон от сканирования мозговых волн через камеру. Просто наденьте чехол — и никто не узнает, что вы искали в интернете.',
-                img: './images/Case.png',
-                badge: 'Хит',
-                rating: 4.7,
-                reviews: 234,
-                inStock: true,
-                usage: 'Надевайте перед сном, чтобы смартфон не крал ваши сны через ночной режим.',
-            },
-            {
-                id: 8,
-                name: 'Фольгированные наушники АПД-Безшум',
-                price: 599,
-                oldPrice: 790,
-                desc: 'Наушники для полной изоляции от внешнего шума и мыслеволн. В комплекте — запасные фольгированные амбушюры.',
-                img: './images/Headphones.png',
-                badge: 'Акция',
-                rating: 4.5,
-                reviews: 78,
-                inStock: true,
-                usage: 'Включайте в метро — окружающие не смогут считать ваши мысли через вибрации голосов.',
-            },
-            {
-                id: 11,
-                name: 'Полотенце для трюка АПД-Блокер',
-                price: 699,
-                oldPrice: 890,
-                desc: 'Тканевое полотенце с фольгированной нитью. Накройте любое вражеское устройство — и передача данных мгновенно прекратится! Работает с телефонами, планшетами, ноутбуками и даже с умными колонками. Трюк с полотенцем теперь имеет практическое применение!',
-                img: './images/Towel.png',
-                badge: 'Хит',
-                rating: 4.9,
-                reviews: 312,
-                inStock: true,
-                usage: 'Просто накройте устройство полотенцем — данные перестанут передаваться. Идеально для тайных переговоров в офисе.',
-            }
-        ];
+            // ----- ДАННЫЕ КУРСОВ (из data-атрибутов) -----
+            const courseData = {};
+            document.querySelectorAll('.course-card').forEach(card => {
+                const id = card.dataset.id;
+                courseData[id] = {
+                    name: card.dataset.name,
+                    price: parseInt(card.dataset.price),
+                    duration: card.dataset.duration,
+                    desc: card.dataset.desc,
+                    emoji: card.dataset.emoji || '📚',
+                    badge: card.dataset.badge
+                };
+            });
 
             // ----- состояние -----
             let cart = [];
-            let currentProductId = null;
-            let inCartStatus = {}; // для кнопок "в корзине"
+            let currentCourseId = null;
+            const cartCount = document.getElementById('cartCount');
+            const toast = document.getElementById('toast');
+            const cartIcon = document.getElementById('cartIcon');
+            let toastTimeout = null;
 
-            // ----- DOM -----
-            const catalogEl = document.getElementById('catalog');
+            // DOM для модалки
             const modalOverlay = document.getElementById('modalOverlay');
-            const modalImg = document.getElementById('modalImg');
+            const modalEmoji = document.getElementById('modalEmoji');
             const modalName = document.getElementById('modalName');
             const modalPrice = document.getElementById('modalPrice');
+            const modalDuration = document.getElementById('modalDuration');
             const modalDesc = document.getElementById('modalDesc');
             const modalAddBtn = document.getElementById('modalAddBtn');
             const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+            // DOM для корзины
             const cartSidebar = document.getElementById('cartSidebar');
             const cartItems = document.getElementById('cartItems');
-            const cartCount = document.getElementById('cartCount');
             const subtotalAmount = document.getElementById('subtotalAmount');
             const deliveryCost = document.getElementById('deliveryCost');
             const totalAmount = document.getElementById('totalAmount');
             const cartCloseBtn = document.getElementById('cartCloseBtn');
-            const cartIcon = document.getElementById('cartIcon');
             const payBtn = document.getElementById('payBtn');
-            const toast = document.getElementById('toast');
 
+            // DOM для оплаты
             const payOverlay = document.getElementById('payOverlay');
             const payTotal = document.getElementById('payTotal');
             const payProgressBar = document.getElementById('payProgressBar');
@@ -1291,124 +1256,20 @@
             const payCloseBtn = document.getElementById('payCloseBtn');
 
             // ----- helpers -----
-            function getProduct(id) { return products.find(p => p.id === id); }
+            function getCourse(id) { return courseData[id] || null; }
 
             function getCartTotal() {
                 return cart.reduce((acc, item) => {
-                    const p = getProduct(item.id);
-                    return acc + (p ? p.price * item.qty : 0);
+                    const c = getCourse(item.id);
+                    return acc + (c ? c.price * item.qty : 0);
                 }, 0);
             }
 
-            function getCartCount() { return cart.reduce((acc, item) => acc + item.qty, 0); }
+            function getCartCountTotal() { return cart.reduce((acc, item) => acc + item.qty, 0); }
 
-            // ----- рендер каталога -----
-            function renderCatalog() {
-                catalogEl.innerHTML = '';
-                products.forEach(p => {
-                    const card = document.createElement('article');
-                    card.className = 'product-card';
-                    const stars = '⭐'.repeat(Math.floor(p.rating)) + (p.rating % 1 >= 0.5 ? '⭐' : '');
-                    const badgeClass = p.badge === 'Хит' ? 'hit' : p.badge === 'Новинка' ? 'new' : 'popular';
-                    card.innerHTML = `
-                        <div class="product-image" data-id="${p.id}">
-                            <img src="${p.img}" alt="${p.name}" loading="lazy" />
-                            <div class="badges"><span class="badge ${badgeClass}">${p.badge}</span></div>
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">${p.name}</div>
-                            <div class="product-rating">
-                                <span class="stars">${stars}</span>
-                                <span>${p.rating}</span>
-                                <span style="color:var(--text-muted)">(${p.reviews})</span>
-                            </div>
-                            <div class="product-availability ${p.inStock ? '' : 'out'}">${p.inStock ? '✅ В наличии' : '❌ Нет в наличии'}</div>
-                            <div class="product-prices">
-                                ${p.oldPrice ? `<span class="price-old">${p.oldPrice} ₽</span>` : ''}
-                                <span class="price-current">${p.price}</span>
-                            </div>
-                            <div class="product-bottom">
-                                <div class="add-controls">
-                                    <button class="qty-minus" data-id="${p.id}">−</button>
-                                    <span class="qty-display" data-id="${p.id}">1</span>
-                                    <button class="qty-plus" data-id="${p.id}">+</button>
-                                </div>
-                                <button class="product-btn add-cart-btn" data-id="${p.id}">В корзину</button>
-                            </div>
-                        </div>
-                    `;
-                    catalogEl.appendChild(card);
-                });
-
-                // события: картинка -> модалка
-                document.querySelectorAll('.product-image').forEach(el => {
-                    el.addEventListener('click', function() { openModal(parseInt(this.dataset.id)); });
-                });
-
-                // +/- в карточках
-                document.querySelectorAll('.qty-minus').forEach(btn => {
-                    btn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        const id = parseInt(this.dataset.id);
-                        const display = document.querySelector(`.qty-display[data-id="${id}"]`);
-                        let val = parseInt(display.textContent) || 1;
-                        if (val > 1) val--;
-                        display.textContent = val;
-                    });
-                });
-                document.querySelectorAll('.qty-plus').forEach(btn => {
-                    btn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        const id = parseInt(this.dataset.id);
-                        const display = document.querySelector(`.qty-display[data-id="${id}"]`);
-                        let val = parseInt(display.textContent) || 1;
-                        val++;
-                        display.textContent = val;
-                    });
-                });
-
-                // кнопка "В корзину" в карточках
-                document.querySelectorAll('.add-cart-btn').forEach(btn => {
-                    btn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        const id = parseInt(this.dataset.id);
-                        const display = document.querySelector(`.qty-display[data-id="${id}"]`);
-                        const qty = parseInt(display.textContent) || 1;
-                        addToCart(id, qty);
-                        // анимация "летит в корзину" — упрощённо меняем текст
-                        this.textContent = '✓ В корзине';
-                        this.classList.add('in-cart');
-                        setTimeout(() => {
-                            this.textContent = 'В корзину';
-                            this.classList.remove('in-cart');
-                        }, 1500);
-                        showToast(`✅ ${qty} шт. добавлено`);
-                        display.textContent = '1';
-                    });
-                });
-            }
-
-            // ----- модалка -----
-            function openModal(productId) {
-                const p = getProduct(productId);
-                if (!p) return;
-                currentProductId = p.id;
-                modalImg.src = p.img;
-                modalImg.alt = p.name;
-                modalName.textContent = p.name;
-                modalPrice.textContent = p.price;
-                modalDesc.textContent = p.desc;
-                modalOverlay.classList.add('open');
-            }
-
-            function closeModal() {
-                modalOverlay.classList.remove('open');
-                currentProductId = null;
-            }
-
-            // ----- корзина -----
+            // ----- рендер корзины -----
             function renderCart() {
-                const count = getCartCount();
+                const count = getCartCountTotal();
                 cartCount.textContent = count;
 
                 if (cart.length === 0) {
@@ -1422,15 +1283,15 @@
                 let html = '';
                 let subtotal = 0;
                 cart.forEach(item => {
-                    const p = getProduct(item.id);
-                    if (!p) return;
-                    subtotal += p.price * item.qty;
+                    const c = getCourse(item.id);
+                    if (!c) return;
+                    subtotal += c.price * item.qty;
                     html += `
                         <div class="cart-item" data-id="${item.id}">
-                            <div class="cart-item-img"><img src="${p.img}" alt="${p.name}" /></div>
+                            <div class="cart-item-img">${c.emoji}</div>
                             <div class="cart-item-info">
-                                <div class="cart-item-name">${p.name}</div>
-                                <div class="cart-item-price">${p.price} ₽ × ${item.qty}</div>
+                                <div class="cart-item-name">${c.name}</div>
+                                <div class="cart-item-price">${c.price} ₽ × ${item.qty}</div>
                             </div>
                             <div class="cart-item-controls">
                                 <button class="cart-qty-minus" data-id="${item.id}">−</button>
@@ -1443,16 +1304,16 @@
                 });
                 cartItems.innerHTML = html;
 
-                const delivery = subtotal >= 3000 ? 0 : 250;
-                const total = subtotal + delivery;
+                const delivery = 0; // доставка для курсов не требуется
+                const total = subtotal;
                 subtotalAmount.textContent = subtotal + ' ₽';
-                deliveryCost.textContent = delivery + ' ₽';
+                deliveryCost.textContent = '0 ₽';
                 totalAmount.textContent = total + ' ₽';
 
                 // события в корзине
                 document.querySelectorAll('.cart-qty-minus').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const id = parseInt(this.dataset.id);
+                        const id = this.dataset.id;
                         const item = cart.find(i => i.id === id);
                         if (item && item.qty > 1) {
                             item.qty -= 1;
@@ -1464,7 +1325,7 @@
                 });
                 document.querySelectorAll('.cart-qty-plus').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const id = parseInt(this.dataset.id);
+                        const id = this.dataset.id;
                         const item = cart.find(i => i.id === id);
                         if (item) item.qty += 1;
                         renderCart();
@@ -1472,21 +1333,21 @@
                 });
                 document.querySelectorAll('.cart-item-remove').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const id = parseInt(this.dataset.id);
+                        const id = this.dataset.id;
                         cart = cart.filter(i => i.id !== id);
                         renderCart();
-                        showToast('🗑️ Товар удалён');
+                        showToast('🗑️ Курс удалён');
                     });
                 });
             }
 
-            function addToCart(productId, qty = 1) {
+            function addToCart(courseId, qty = 1) {
                 if (qty <= 0) return;
-                const existing = cart.find(item => item.id === productId);
+                const existing = cart.find(item => item.id === courseId);
                 if (existing) {
                     existing.qty += qty;
                 } else {
-                    cart.push({ id: productId, qty: qty });
+                    cart.push({ id: courseId, qty: qty });
                 }
                 renderCart();
             }
@@ -1496,9 +1357,25 @@
                 renderCart();
             }
 
-            // ----- тост -----
-            let toastTimeout = null;
+            // ----- модалка -----
+            function openModal(courseId) {
+                const c = getCourse(courseId);
+                if (!c) return;
+                currentCourseId = courseId;
+                modalEmoji.textContent = c.emoji;
+                modalName.textContent = c.name;
+                modalPrice.textContent = c.price;
+                modalDuration.textContent = '⏱️ ' + c.duration;
+                modalDesc.textContent = c.desc;
+                modalOverlay.classList.add('open');
+            }
 
+            function closeModal() {
+                modalOverlay.classList.remove('open');
+                currentCourseId = null;
+            }
+
+            // ----- тост -----
             function showToast(msg) {
                 toast.textContent = msg;
                 toast.classList.add('show');
@@ -1506,13 +1383,13 @@
                 toastTimeout = setTimeout(() => toast.classList.remove('show'), 2200);
             }
 
-            // ----- СИМУЛЯЦИЯ ОПЛАТЫ (банковское окно) -----
+            // ----- оплата (как в shop) -----
             function startPayment() {
                 if (cart.length === 0) {
                     showToast('⚠️ Корзина пуста');
                     return;
                 }
-                const total = getCartTotal() + (getCartTotal() >= 3000 ? 0 : 250);
+                const total = getCartTotal();
                 if (total === 0) { showToast('⚠️ Корзина пуста'); return; }
 
                 payOverlay.classList.add('open');
@@ -1554,10 +1431,37 @@
             }
 
             // ----- события -----
+            // клик по картинке -> модалка
+            document.querySelectorAll('.course-image').forEach(el => {
+                el.addEventListener('click', function() {
+                    const card = this.closest('.course-card');
+                    if (card) openModal(card.dataset.id);
+                });
+            });
+
+            // кнопка "Записаться" в карточках
+            document.querySelectorAll('.course-btn').forEach(btn => {
+                // пропускаем кнопку в модалке (она有自己的 обработчик)
+                if (btn.closest('.modal-actions')) return;
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const id = this.dataset.id;
+                    addToCart(id, 1);
+                    this.textContent = '✓ Записано';
+                    this.classList.add('in-cart');
+                    showToast(`✅ Запись на курс оформлена`);
+                    setTimeout(() => {
+                        this.textContent = 'Записаться';
+                        this.classList.remove('in-cart');
+                    }, 1500);
+                });
+            });
+
+            // модалка: кнопка записаться
             modalAddBtn.addEventListener('click', function() {
-                if (currentProductId) {
-                    addToCart(currentProductId, 1);
-                    showToast('✅ Добавлено в корзину');
+                if (currentCourseId) {
+                    addToCart(currentCourseId, 1);
+                    showToast('✅ Запись на курс оформлена');
                     closeModal();
                 }
             });
@@ -1566,12 +1470,22 @@
                 if (e.target === modalOverlay) closeModal();
             });
 
+            // корзина
             cartIcon.addEventListener('click', function() {
                 cartSidebar.classList.toggle('open');
                 renderCart();
             });
             cartCloseBtn.addEventListener('click', function() { cartSidebar.classList.remove('open'); });
 
+            // клик вне корзины — закрываем
+            document.addEventListener('click', function(e) {
+                if (cartSidebar.classList.contains('open')) {
+                    const isInside = cartSidebar.contains(e.target) || cartIcon.contains(e.target);
+                    if (!isInside) cartSidebar.classList.remove('open');
+                }
+            });
+
+            // оплата
             payBtn.addEventListener('click', startPayment);
 
             payCloseBtn.addEventListener('click', function() { payOverlay.classList.remove('open'); });
@@ -1581,6 +1495,7 @@
                 }
             });
 
+            // ESC
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     closeModal();
@@ -1591,17 +1506,10 @@
                 }
             });
 
-            document.addEventListener('click', function(e) {
-                if (cartSidebar.classList.contains('open')) {
-                    const isInside = cartSidebar.contains(e.target) || cartIcon.contains(e.target);
-                    if (!isInside) cartSidebar.classList.remove('open');
-                }
-            });
-
             // ----- старт -----
-            renderCatalog();
             renderCart();
         })();
     </script>
+
 </body>
 </html>
